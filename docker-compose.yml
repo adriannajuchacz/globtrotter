@@ -1,0 +1,33 @@
+version: '3'
+
+#############################
+# Setup backend container
+#############################
+backend:
+  build: ./globtrotter-backend
+  expose:
+    - ${APP_SERVER_PORT}
+  enviroment:
+    API_HOST: ${API_HOST}
+    APP_SERVER_PORT: ${APP_SERVER_PORT}
+  ports:
+    - ${APP_SERVER_PORT}:${APP_SERVER_PORT}
+  volumes:
+    - ./globtrotter-backend/src:/srv/app
+  command: npm run dev
+#############################
+# Setup frontend container
+#############################
+frontend:
+  build: ./globtrotter-frontend
+  enviroment:
+    - VUE_APP_PORT=${VUE_APP_PORT}
+  expose:
+    - ${VUE_APP_PORT}
+  ports:
+    - ${VUE_APP_PORT}:${VUE_APP_PORT}
+  volumes:
+    - ./globtrotter-frontend/src:/srv/app
+  links:
+    - backend
+  command: npm run dev
