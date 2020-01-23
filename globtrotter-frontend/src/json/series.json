@@ -1,0 +1,32 @@
+{
+    "continents": [
+        { 
+            "name": "Europe",
+            "color": "#81968F"
+        },
+        { 
+            "name": "Asia",
+            "color": "#b56c67"
+        },
+        { 
+            "name": "South America", 
+            "color": "#c4a178"
+        },
+        { 
+            "name": "Northern America",
+            "color": "#c7bb87"
+        },
+        { 
+            "name": "Central America",
+            "color": "#685882"
+        },
+        { 
+            "name": "Africa",
+            "color": "#a8607c"
+        },
+        { 
+            "name": "Oceania",
+            "color": "#abc293"
+        }  
+    ]
+}
