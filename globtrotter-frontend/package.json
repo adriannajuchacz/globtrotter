@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.8.1",
+    "@amcharts/amcharts4-geodata": "^4.1.10",
     "@babel/runtime": "^7.3.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
