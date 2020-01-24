@@ -3,37 +3,65 @@
         { 
             "name": "Europe",
             "color": "#899c94",
-            "hoverColor": "#539478"
+            "hoverColor": "#539478",
+            "extrems": ["NO","CY","PT","UA"],
+            "ex": {
+               "north": 75, "east": 40, "south": 34, "west":-9
+            }
         },
         { 
             "name": "Asia",
             "color": "#b57d79",
-            "hoverColor": "#bf5a52"
+            "hoverColor": "#bf5a52",
+            "extrems": ["NO","MY","TR"],
+            "ex": {
+               "north": 77.43, "east": -40.0701, "south": 150.5758, "west":-9.4742 
+            }
         },
         { 
             "name": "South America", 
             "color": "#c4a887",
-            "hoverColor": "#ba7e38"
+            "hoverColor": "#ba7e38",
+            "extrems": [],
+            "ex": {
+               "north": 12, "east": -34, "south": -55, "west":-91 
+            }
         },
         { 
             "name": "Northern America",
             "color": "#bfb793",
-            "hoverColor": "#baa545"
+            "hoverColor": "#baa545",
+            "extrems": [],
+            "ex": {
+               "north": 73, "east": -50, "south": 70, "west": -40 
+            }
         },
         { 
             "name": "Central America",
             "color": "#9f94b0",
-            "hoverColor": "#7957ad"
+            "hoverColor": "#7957ad",
+            "extrems": [],
+            "ex": {
+               "north": 32, "east": -77, "south": 7, "west":-117 
+            }
         },
-        { 
+        {
             "name": "Africa",
             "color": "#ad8695",
-            "hoverColor": "#b34d74"
+            "hoverColor": "#b34d74",
+            "extrems": [],
+            "ex": {
+               "north": 31, "east": 70, "south": -29, "west": -29 
+            }
         },
         { 
             "name": "Oceania",
             "color": "#a9b89a",
-            "hoverColor": "#72a341"
+            "hoverColor": "#72a341",
+            "extrems": [15.2155, 179.9991, -46.6054, -178.1585],
+            "ex": {
+               "north": 77.43, "east": -40.0701, "south": 150.5758, "west":-9.4742 
+            }
         }  
     ]
 }
