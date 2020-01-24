@@ -57,17 +57,33 @@ export default {
         } else if (ct.name == 'Asia') {
           cont2C.push("RU")
         }
-        this.createSeries(ct.name, cont2C, ct.color, "#51665F");
+        this.createSeries(ct.name, cont2C, ct.color, ct.hoverColor);
       });
     },
     createSeries(name, include, color, hoverColor) {
+      console.log(hoverColor)
       var series = this.map.series.push(new am4maps.MapPolygonSeries());
       series.name = name;
       series.useGeodata = true;
       series.include = include;
       series.mapPolygons.template.fill = am4core.color(color);
+      series.mapPolygons.template.tooltipText = name;
+      series.events.on("over", this.over);
+      series.events.on("out", this.out);
 
+      var hover = series.mapPolygons.template.states.create("highlight");
+      hover.properties.fill = am4core.color(hoverColor);
     },
+    over(ev) {
+      ev.target.mapPolygons.each(function(polygon) {
+      polygon.setState("highlight");
+      })
+    },
+    out(ev) {
+      ev.target.mapPolygons.each(function(polygon) {
+        polygon.setState("default");
+      })
+    }
   }
 }
 </script>

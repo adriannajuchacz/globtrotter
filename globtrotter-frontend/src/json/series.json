@@ -2,31 +2,38 @@
     "continents": [
         { 
             "name": "Europe",
-            "color": "#81968F"
+            "color": "#899c94",
+            "hoverColor": "#539478"
         },
         { 
             "name": "Asia",
-            "color": "#b56c67"
+            "color": "#b57d79",
+            "hoverColor": "#bf5a52"
         },
         { 
             "name": "South America", 
-            "color": "#c4a178"
+            "color": "#c4a887",
+            "hoverColor": "#ba7e38"
         },
         { 
             "name": "Northern America",
-            "color": "#c7bb87"
+            "color": "#bfb793",
+            "hoverColor": "#baa545"
         },
         { 
             "name": "Central America",
-            "color": "#685882"
+            "color": "#9f94b0",
+            "hoverColor": "#7957ad"
         },
         { 
             "name": "Africa",
-            "color": "#a8607c"
+            "color": "#ad8695",
+            "hoverColor": "#b34d74"
         },
         { 
             "name": "Oceania",
-            "color": "#abc293"
+            "color": "#a9b89a",
+            "hoverColor": "#72a341"
         }  
     ]
 }
