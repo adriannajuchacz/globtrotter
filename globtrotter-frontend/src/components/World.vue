@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button type="button" class="btn btn-dark">Dark</button>
+    <button type="button" class="btn btn-dark" v-on:click="selectPolska">Dark</button>
     <div id="chartdiv"></div>
   </div>
 </template>
@@ -28,10 +28,6 @@ export default {
     this.map.projection = new am4maps.projections.Miller()
     this.map.mouseWheelBehavior = "none"
 
-    this.map.events.on("ready", ev => {
-      console.log(this.map.series)
-    });
-
     this.fetchCountries()
   },
   methods: {
@@ -58,22 +54,14 @@ export default {
       series.name = name;
       series.useGeodata = true;
       series.include = include;
-
+      
       let polygonTemplate = series.mapPolygons.template;
       polygonTemplate.fill = am4core.color(color);
       polygonTemplate.tooltipText = name;
 
       //zoom to continent on click
-      /*
       polygonTemplate.events.on("hit", function(ev) {
         ev.target.series.chart.zoomToRectangle(ex.north, ex.east, ex.south, ex.west, 1, true);
-      })
-      */
-
-      polygonTemplate.events.on("hit", function(ev) {
-        console.log(ev.target)
-        ev.target.fill = am4core.color(color);
-        ev.target.series.chart.zoomToMapObject(ev.target);
       })
 
       // highlight on hover
@@ -92,6 +80,22 @@ export default {
           polygon.setState("default");
         })      
       });
+
+      // Create active state
+      var as = polygonTemplate.states.create("active");
+      as.properties.fill = am4core.color("#7B3625");
+
+      this.map.events.on("ready", ev => {
+        var india = series.getPolygonById("IN");
+
+        // Set active state
+        setTimeout(function() {
+          india.isActive = true;
+        }, 1000);
+      });
+    },
+    selectPolska() {
+      //console.log(this.series[0].data[0].fill(ff0000))
     },
     moveRussiaToAsia (countries, contName ) {
         if(contName == 'Europe') {
