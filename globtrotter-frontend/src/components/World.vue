@@ -69,33 +69,7 @@ export default {
       let polygonTemplate = series.mapPolygons.template;
 
       polygonTemplate.events.on("hit", function(ev) {
-          /*
-          // Init extrems
-          var north, south, west, east;
-          
-          // Find extreme coordinates for all pre-zoom countries
-          for(var i = 0; i < include.length; i++) {
-            var country = series.getPolygonById(include[i]);
-            if (north == undefined || (country.north > north)) {
-              north = country.north;
-            }
-            if (south == undefined || (country.south < south)) {
-              south = country.south;
-            }
-            if (west == undefined || (country.west < west)) {
-              west = country.west;
-            }
-            if (east == undefined || (country.east > east)) {
-              east = country.east;
-            }
-            
-            country.isActive = true;
-          }
-        console.log(north, east, south, west)
-        */
-        console.log(ex.north, ex.east, ex.south, ex.west)
         ev.target.series.chart.zoomToRectangle(ex.north, ex.east, ex.south, ex.west, 1, true);
-        //ev.target.series.chart.zoomToRectangle(extrems[0], extrems[1], extrems[2], extrems[0], 1, true);
       })
 
       var hover = series.mapPolygons.template.states.create("highlight");
