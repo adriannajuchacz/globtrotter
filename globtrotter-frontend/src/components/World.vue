@@ -6,14 +6,14 @@
 import * as am4core from "@amcharts/amcharts4/core"
 import * as am4maps from "@amcharts/amcharts4/maps"
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow"
-import series_json from '@/json/series.json'
+import data from '@/json/series.json'
 import axios from 'axios'
 
 export default {
   data() {
     return {
+      data: data,
       map: null,
-      series_json: series_json,
       countries: null
     }
   },
@@ -26,13 +26,6 @@ export default {
     this.map.mouseWheelBehavior = "none"
 
     this.fetchCountries()
-    
-
-  },
-  beforeDestroy() {
-    if (this.map) {
-      this.map.dispose()
-    }
   },
   methods: {
     async fetchCountries () {
@@ -41,49 +34,56 @@ export default {
       this.groupCountries()
     },
     groupCountries() {
-      this.series_json.continents.forEach(ct => {
+      this.data.continents.forEach(ct => {
         //select countries from particular continent
         let cont2C = this.countries.filter(cn => (cn.region === ct.name || cn.subregion === ct.name) )
         .map(el => el.alpha2Code)
 
         //Russia should be in Asia
-        if(ct.name == 'Europe') {
-          cont2C = cont2C.filter((el) => !(['RU'].includes(el.alpha2Code)))
-        } else if (ct.name == 'Asia') {
-          cont2C.push("RU")
-        }
-        this.createSeries(ct.name, cont2C, ct.color, ct.hoverColor, ct.extrems, ct.ex);
+        cont2C = this.moveRussiaToAsia(cont2C, ct.name)
+
+        //create series for each continent
+        this.createSeries(ct.name, cont2C, ct.color, ct.hoverColor, ct.ex);
       });
     },
-    createSeries(name, include, color, hoverColor, extrems, ex) {
-      var series = this.map.series.push(new am4maps.MapPolygonSeries());
+    createSeries(name, include, color, hoverColor, ex) {
+      let series = this.map.series.push(new am4maps.MapPolygonSeries());
       series.name = name;
       series.useGeodata = true;
       series.include = include;
-      series.mapPolygons.template.fill = am4core.color(color);
-      series.mapPolygons.template.tooltipText = name;
-      series.events.on("over", this.over);
-      series.events.on("out", this.out);
 
-      // Configure series
       let polygonTemplate = series.mapPolygons.template;
-
+      polygonTemplate.fill = am4core.color(color);
+      polygonTemplate.tooltipText = name;
+      //zoom to continent on click
       polygonTemplate.events.on("hit", function(ev) {
         ev.target.series.chart.zoomToRectangle(ex.north, ex.east, ex.south, ex.west, 1, true);
       })
 
-      var hover = series.mapPolygons.template.states.create("highlight");
+      // highlight on hover
+      series.events.on("over",  ev => {
+        ev.target.mapPolygons.each(polygon => {
+          polygon.setState("highlight");
+        })      
+      });
+
+      var hover = polygonTemplate.states.create("highlight");
       hover.properties.fill = am4core.color(hoverColor);
+
+      // default on no hover
+      series.events.on("out", ev => {
+        ev.target.mapPolygons.each(polygon => {
+          polygon.setState("default");
+        })      
+      });
     },
-    over(ev) {
-      ev.target.mapPolygons.each(function(polygon) {
-      polygon.setState("highlight");
-      })
-    },
-    out(ev) {
-      ev.target.mapPolygons.each(function(polygon) {
-        polygon.setState("default");
-      })
+    moveRussiaToAsia (countries, contName ) {
+        if(contName == 'Europe') {
+          countries = countries.filter((el) => !(['RU'].includes(el.alpha2Code)))
+        } else if (contName == 'Asia') {
+          countries.push("RU")
+        }
+        return countries
     }
   }
 }
